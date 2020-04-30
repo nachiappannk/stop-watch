@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,8 +25,10 @@ namespace StopWatch
     {
         MyStopwatch stopWatch = new MyStopwatch();
         Maximizer _maximizer;
+        RecentActivityDectector _recentActivityDectector;
         public MainWindow()
         {
+            _recentActivityDectector = new RecentActivityDectector(1000 * 60);
             InitializeComponent();
             this.Topmost = true;
             this.Left = 2;
@@ -50,6 +53,7 @@ namespace StopWatch
             }
         }
 
+
         private void Log(string s) 
         {
             Debug.WriteLine(s);
@@ -60,8 +64,10 @@ namespace StopWatch
             while (true) {
 
                 var elapsedTime = stopWatch.GetElapsedTime();
+                var isIdle = _recentActivityDectector.IsIdle();
                 Dispatcher.Invoke(() =>
                 {
+                    if (isIdle) stopWatch.Stop();
                     UpdateTime(elapsedTime);
                     _maximizer.Process();
                 });
