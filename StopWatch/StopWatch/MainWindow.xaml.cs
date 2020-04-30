@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -31,6 +32,22 @@ namespace StopWatch
             this.Top = SystemParameters.PrimaryScreenHeight - this.Height - 40;
             _maximizer = new Maximizer(this, 100);
             UpdateTimeAsync();
+
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+        }
+
+
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                case SessionSwitchReason.SessionLock:
+                    stopWatch.Stop();
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    stopWatch.Start();
+                    break;
+            }
         }
 
         private void Log(string s) 
@@ -45,7 +62,6 @@ namespace StopWatch
                 var elapsedTime = stopWatch.GetElapsedTime();
                 Dispatcher.Invoke(() =>
                 {
-                    Log($"The height is {this.Height}");
                     UpdateTime(elapsedTime);
                     _maximizer.Process();
                 });
