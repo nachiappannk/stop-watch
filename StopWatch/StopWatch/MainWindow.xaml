@@ -12,7 +12,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="bvc"/>
     </Window.Resources>
-    <DockPanel Background="Pink" LastChildFill="False" Height="Auto" Width="Auto">
+    <DockPanel Background="Pink" LastChildFill="False" Height="Auto" Width="Auto" x:Name="topD">
         <DockPanel x:Name="ExtraSpace" Height="Auto" Background="Red" DockPanel.Dock="Top" LastChildFill="False">
             <Button Margin="1" Height="20"  Width="20" DockPanel.Dock="Right" Command="{Binding ExpandCommand}" Content="+" />
             <Button Margin="1" Height="20" Width="20" DockPanel.Dock="Right" Command="{Binding ContractCommand}" Content="-" 
@@ -43,8 +43,9 @@
         </Grid>
         <DockPanel DockPanel.Dock="Bottom" Background="Orange"
                    Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}" Height="300">
-            <DataGrid AlternatingRowBackground = "LightBlue"  
-         AlternationCount = "2" AutoGenerateColumns = "False" ItemsSource="{Binding TimeLog}" IsReadOnly="True">
+            <DataGrid HorizontalAlignment="Stretch" AlternatingRowBackground = "LightBlue"  
+                      x:Name="dg"
+         AlternationCount = "2" AutoGenerateColumns = "False" ItemsSource="{Binding TimeLog}" IsReadOnly="True" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header = "Starting Time" Width="50" Binding = "{Binding StartTime}" />
                     <DataGridTextColumn Header = "Duaration" Width="50" Binding = "{Binding Duration}" />

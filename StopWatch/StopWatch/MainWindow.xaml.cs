@@ -38,18 +38,18 @@ namespace StopWatch
             //this.Top = SystemParameters.PrimaryScreenHeight - this.Height - 40;
             //_maximizer = new Maximizer(this, 100);
             //UpdateTimeAsync();
+            
 
             //SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            dg.Columns[0].Width = new DataGridLength((topD.ActualWidth - 10) / 2, DataGridLengthUnitType.SizeToHeader);
+            dg.Columns[1].Width = new DataGridLength((topD.ActualWidth - 10) / 2, DataGridLengthUnitType.SizeToHeader);
+
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("The property name is" + e.PropertyName);
-            if (!(sender is StopwatchViewModel)) return;
-            Debug.WriteLine("Time is " + ((StopwatchViewModel)sender).Time);
-            Debug.WriteLine("IsTimeVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsTimeVisible);
-            Debug.WriteLine("IsPlayPauseVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsPlayPauseVisible);
-            Debug.WriteLine("IsDetailsVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsDetailsVisible);
+            Debug.WriteLine("The width is " + this.Width);
+            Debug.WriteLine("The width is " + topD.ActualWidth);
         }
 
         void ExecutorInUiThread(Action action)
