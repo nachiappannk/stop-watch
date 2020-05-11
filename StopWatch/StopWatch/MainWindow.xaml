@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="1" Width="40" Height="20" Command="{Binding PausePlayCommand}">
-                <TextBlock Text="Start" FontSize="8"/>
+                <TextBlock Text="{Binding PlayPauseText}" FontSize="8"/>
             </Button>
             <Button Grid.Column="1" Margin="1" HorizontalAlignment="Stretch" Height="20" Click="Button_Click">
                 <TextBlock Text="Minimize" FontSize="8"/>

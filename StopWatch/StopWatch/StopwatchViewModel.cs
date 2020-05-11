@@ -21,8 +21,6 @@ namespace StopWatch
 
         List<Mode> _modes = new List<Mode>() { Mode.ExpandContractButtonOnly, Mode.Time, Mode.StartStopButton, Mode.Detailed };
 
-        bool _isPlaying = false;
-
         Action<Action> _executor;
 
         public void SetExecutor(Action<Action> executor)
@@ -75,16 +73,25 @@ namespace StopWatch
             UpdateTimeAsync();
         }
 
+        private string _playPauseText = "Play";
+        public string PlayPauseText
+        {
+            get => _playPauseText;
+            set => SetValue(ref _playPauseText, value);
+        }
+
         private void StartStop()
         {
             if (!_isRunning)
             {
                 _stopWath.Start();
                 _isRunning = true;
+                PlayPauseText = "Pause";
             }
             else {
                 _stopWath.Stop();
                 _isRunning = false;
+                PlayPauseText = "Play";
             }
         }
 
