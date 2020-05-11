@@ -5,16 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StopWatch"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
+        d:DataContext ="{d:DesignInstance {x:Type local:StopwatchViewModel}, IsDesignTimeCreatable=True}"
         Title="Stop Watch" Height="70" Width="270">
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0,4">
-            <Button Content="Start" Margin="4,0" Click="OnStart" Width="40" Height="20"/>
-            <Button Content="Pause" Margin="4,0" Click="OnStop" Width="40" Height="20"/>
-            <Button Content="Clear" Margin="4,0" Click="OnClear" Width="40" Height="20"/>
-        </StackPanel>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBlock x:Name="time" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Text="22.22.11.222"/>
+        <Grid x:Name="ExtraSpace" Height="Auto">
+            
         </Grid>
+        <DockPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0,4">
+                <Button Content="Start" Margin="4,0" Width="40" Height="20"/>
+                <Button Content="Pause" Margin="4,0" Width="40" Height="20"/>
+                <Button Content="Clear" Margin="4,0" Width="40" Height="20"/>
+                <Button Content="V" Margin="4,0" Height="20"/>
+            </StackPanel>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TextBlock x:Name="time" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Time}"/>
+            </Grid>
+        </DockPanel>
     </DockPanel>
 </Window>
