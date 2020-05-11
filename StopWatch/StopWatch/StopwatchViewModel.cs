@@ -45,8 +45,13 @@ namespace StopWatch
             if ((value.CompareTo(t) != 0) || (t == null))
             {
                 t = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+                OnPropertyChange(callerName);
             }
+        }
+
+        private void OnPropertyChange([CallerMemberName] string callerName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
 
         private string _time;
@@ -80,6 +85,18 @@ namespace StopWatch
             set => SetValue(ref _playPauseText, value);
         }
 
+
+        private List<TimeLog> _timeLog = new List<TimeLog>();
+        public List<TimeLog> TimeLog
+        {
+            get => _timeLog;
+            set {
+                _timeLog = value;
+                OnPropertyChange();
+            }
+        }
+
+
         private void StartStop()
         {
             if (!_isRunning)
@@ -92,6 +109,7 @@ namespace StopWatch
                 _stopWath.Stop();
                 _isRunning = false;
                 PlayPauseText = "Play";
+                TimeLog = _stopWath.GetTimeLog();
             }
         }
 
@@ -117,6 +135,31 @@ namespace StopWatch
             CurrentMode = GetPreviousMode(CurrentMode);
         }
 
+        private string GetElapsedTimeAsString(long timeInMilliSeconds)
+        {
+            var elapsedTime = timeInMilliSeconds;
+            var milliSeconds = elapsedTime % 1000;
+            elapsedTime = elapsedTime / 1000;
+
+            var seconds = elapsedTime % 60;
+            elapsedTime = elapsedTime / 60;
+
+            var minutes = elapsedTime % 60;
+            elapsedTime = elapsedTime / 60;
+
+            var hours = elapsedTime;
+
+            string.Format(String.Format("{0:00}", hours));
+
+            var timeString = $"{Format(hours)}:{Format(minutes)}:{Format(seconds)} {Format(milliSeconds, "{0:000}")}";
+            return timeString;
+        }
+
+        private string Format(long number, string pattern = "{0:00}")
+        {
+            return string.Format(pattern, number);
+        }
+
         private async void UpdateTimeAsync()
         {
 
@@ -124,7 +167,8 @@ namespace StopWatch
             {
                 if (_executor != null) 
                 {
-                    var elapsedTime = _stopWath.GetElapsedTime();
+                    var elapsedTime = GetElapsedTimeAsString(_stopWath.GetElapsedTime());
+                    
                     _executor.Invoke(() =>
                     {
                         Time = elapsedTime;
@@ -133,6 +177,8 @@ namespace StopWatch
                 await Task.Delay(100);
             }
         }
+
+
 
         private Mode GetNextMode(Mode mode)
         {

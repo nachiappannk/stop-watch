@@ -42,8 +42,15 @@
             </Button>
         </Grid>
         <DockPanel DockPanel.Dock="Bottom" Background="Orange" Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}">
-            <Button Content="Start1" Margin="4,0" Width="40" Height="20"/>
-            <Button Content="Pause1" Margin="4,0" Width="40" Height="20"/>
+            <Button></Button>
+            <ListView ItemsSource="{Binding TimeLog}">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="false">
+                        <GridViewColumn Header="Start Time" Width="50" DisplayMemberBinding="{Binding Path=StartTime}" />
+                        <GridViewColumn Header="Duration" Width="50" DisplayMemberBinding="{Binding Path=Duration}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </DockPanel>
     </DockPanel>
 </Window>

@@ -8,19 +8,32 @@ namespace StopWatch
     class MyStopwatch
     {
         Stopwatch _stopWatch;
+
+        List<TimeLog> _timeLogs = new List<TimeLog>();
         public MyStopwatch()
         {
             _stopWatch = new Stopwatch();
         }
 
+        DateTime _startingTime;
+
         public void Start()
         {
             _stopWatch.Start();
+            _startingTime = DateTime.Now;
         }
 
         public void Stop() 
         {
+            var endingTime = DateTime.Now;
+            var timeSpan = endingTime - _startingTime;
+            _timeLogs.Add(new TimeLog() { StartTime = _startingTime.ToString("HH:mm") , Duration = timeSpan.TotalMinutes.ToString()});
             _stopWatch.Stop();
+        }
+
+        public List<TimeLog> GetTimeLog()
+        {
+            return _timeLogs;
         }
 
         public void Clear() 
@@ -29,34 +42,15 @@ namespace StopWatch
             _stopWatch.Reset();
         }
 
-        public string GetElapsedTime() 
+        public long GetElapsedTime() 
         {
-            return GetElapsedTimeAsString(_stopWatch);
+            return _stopWatch.ElapsedMilliseconds;
         }
+    }
 
-        private string GetElapsedTimeAsString(Stopwatch stopWatch)
-        {
-            var elapsedTime = stopWatch.ElapsedMilliseconds;
-            var milliSeconds = elapsedTime % 1000;
-            elapsedTime = elapsedTime / 1000;
-
-            var seconds = elapsedTime % 60;
-            elapsedTime = elapsedTime / 60;
-
-            var minutes = elapsedTime % 60;
-            elapsedTime = elapsedTime / 60;
-
-            var hours = elapsedTime;
-
-            string.Format(String.Format("{0:00}", hours));
-
-            var timeString = $"{Format(hours)}:{Format(minutes)}:{Format(seconds)} {Format(milliSeconds,"{0:000}")}";
-            return timeString;
-        }
-
-        private string Format(long number, string pattern ="{0:00}") 
-        {
-            return string.Format(pattern, number);
-        }
+    public class TimeLog
+    {
+        public string StartTime { get; set; }
+        public string Duration { get; set; }
     }
 }
