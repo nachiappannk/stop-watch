@@ -59,6 +59,32 @@ namespace StopWatch
             });
         }
 
+        private void MButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnTitleChange(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowStyle == WindowStyle.None)
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                mText.Text = "Hide Title";
+            }
+            else 
+            {
+                this.WindowStyle = WindowStyle.None;
+                mText.Text = "Show Title";
+            }
+            this.SizeToContent = SizeToContent.Width;
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
         ////void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         ////{
         ////    switch (e.Reason)
@@ -125,7 +151,7 @@ namespace StopWatch
         ////        this.ExtraSpace.Visibility = Visibility.Visible;
         ////        this.Height = 570;
         ////    }
-            
+
 
         ////}
     }

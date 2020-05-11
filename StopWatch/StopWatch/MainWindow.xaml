@@ -21,10 +21,21 @@
                        Visibility="{Binding VisibilityViewModel.IsTimeVisible, Converter={StaticResource bvc}}"
                        Text="{Binding Time}" />
         </DockPanel>
-        <DockPanel DockPanel.Dock="Top" Background="Yellow" Visibility="{Binding VisibilityViewModel.IsPlayPauseVisible, Converter={StaticResource bvc}}">
-            <Button Content="Start" Margin="4,0" Width="40" Height="20"/>
-            <Button Content="Pause" Margin="4,0" Width="40" Height="20"/>
-        </DockPanel>
+        <Grid DockPanel.Dock="Top" Background="Yellow" Visibility="{Binding VisibilityViewModel.IsPlayPauseVisible, Converter={StaticResource bvc}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Play" Margin="1" Width="40" Height="20"/>
+            <Button Margin="1" HorizontalAlignment="Stretch" Height="20" Click="Button_Click">
+                <TextBlock Text="Minimize" FontSize="8"/>
+            </Button>
+            <Button Grid.Column="3" Margin="1" HorizontalAlignment="Stretch" Height="20" Click="OnTitleChange">
+                <TextBlock x:Name="mText" Text="Show Title" FontSize="8"/>
+            </Button>
+        </Grid>
         <DockPanel DockPanel.Dock="Bottom" Background="Orange" Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}">
             <Button Content="Start1" Margin="4,0" Width="40" Height="20"/>
             <Button Content="Pause1" Margin="4,0" Width="40" Height="20"/>
