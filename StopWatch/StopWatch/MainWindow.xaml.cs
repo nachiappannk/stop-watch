@@ -47,6 +47,9 @@ namespace StopWatch
             Debug.WriteLine("The property name is" + e.PropertyName);
             if (!(sender is StopwatchViewModel)) return;
             Debug.WriteLine("Time is " + ((StopwatchViewModel)sender).Time);
+            Debug.WriteLine("IsTimeVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsTimeVisible);
+            Debug.WriteLine("IsPlayPauseVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsPlayPauseVisible);
+            Debug.WriteLine("IsDetailsVisible is " + ((StopwatchViewModel)sender).VisibilityViewModel.IsDetailsVisible);
         }
 
         void ExecutorInUiThread(Action action)

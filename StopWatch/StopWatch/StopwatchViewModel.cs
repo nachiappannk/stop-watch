@@ -28,11 +28,15 @@ namespace StopWatch
             _executor = executor;
         }
 
-        public Mode _currentMode = Mode.Time;
+        public Mode _currentMode;
         public Mode CurrentMode 
         {
             get => _currentMode;
-            set => SetValue(ref _currentMode, value); 
+            set  
+            {
+                VisibilityViewModel = new VisibilityViewModel(value);
+                SetValue(ref _currentMode, value);
+            } 
         }
         
         private void SetValue<T>(ref T t, T value, [CallerMemberName] string callerName = "") where T: IComparable
@@ -52,12 +56,19 @@ namespace StopWatch
             set => SetValue(ref _time, value);       
         }
 
+        VisibilityViewModel _visibilityViewModel;
+        public VisibilityViewModel VisibilityViewModel
+        {
+            get => _visibilityViewModel;
+            set => SetValue(ref _visibilityViewModel, value);
+        }
+
         public StopwatchViewModel()
         {
+            CurrentMode = Mode.Time;
             _stopWath.Start();
             ExpandCommand = new Command(Expand, CanExpand);
             ContractCommand = new Command(Contract, CanContract);
-            
             UpdateTimeAsync();
         }
 
@@ -112,8 +123,53 @@ namespace StopWatch
         {
             var index = _modes.IndexOf(mode);
             index--;
-            if (index <= 0) return mode;
+            if (index < 0) return mode;
             return _modes[index];
+        }
+    }
+
+
+    public class VisibilityViewModel : IComparable
+    {
+        Mode _mode;
+        public VisibilityViewModel(Mode mode)
+        {
+            _mode = mode;
+        }
+
+        public bool IsTimeVisible 
+        {
+            get 
+            {
+                if ((int)_mode >= (int)Mode.Time) return true;
+                return false;
+            }
+            set { }
+        }
+
+        public bool IsPlayPauseVisible
+        {
+            get 
+            {
+                if ((int)_mode >= (int)Mode.StartStopButton) return true;
+                return false;
+            }
+            set { }
+        }
+
+        public bool IsDetailsVisible
+        {
+            get
+            {
+                if ((int)_mode >= (int)Mode.Detailed) return true;
+                return false;
+            }
+            set { }
+        }
+
+        public int CompareTo(object obj)
+        {
+            return -1;//No two objects are equal
         }
     }
 }

@@ -5,23 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StopWatch"
         mc:Ignorable="d"
-        ResizeMode="CanMinimize"
+        WindowStyle="None"
+        ResizeMode="NoResize"
         d:DataContext ="{d:DesignInstance {x:Type local:StopwatchViewModel}, IsDesignTimeCreatable=True}"
-        Title="Stop Watch" Height="70" Width="270">
-    <DockPanel>
-        <Grid x:Name="ExtraSpace" Height="Auto">
-            
-        </Grid>
-        <DockPanel DockPanel.Dock="Bottom">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0,4">
-                <Button Content="Start" Margin="4,0" Width="40" Height="20"/>
-                <Button Content="Pause" Margin="4,0" Width="40" Height="20"/>
-                <Button Content="Clear" Margin="4,0" Width="40" Height="20"/>
-                <Button Content="V" Margin="4,0" Height="20"/>
-            </StackPanel>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TextBlock x:Name="time" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Time}"/>
-            </Grid>
+        Title="Stop Watch" Height="70" Width="270" SizeToContent="WidthAndHeight" Left="10" Top="100" Topmost="True">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="bvc"/>
+    </Window.Resources>
+    <DockPanel Background="Pink" LastChildFill="False" Height="Auto" Width="Auto">
+        <DockPanel x:Name="ExtraSpace" Height="Auto" Background="Red" DockPanel.Dock="Top" LastChildFill="False">
+            <Button Margin="1" Height="20"  Width="20" DockPanel.Dock="Right" Command="{Binding ExpandCommand}" Content="+" />
+            <Button Margin="1" Height="20" Width="20" DockPanel.Dock="Right" Command="{Binding ContractCommand}" Content="-" 
+                    Visibility="{Binding VisibilityViewModel.IsTimeVisible, Converter={StaticResource bvc}}"/>
+            <TextBlock x:Name="time" FontSize="18" FontWeight="Bold" 
+                       Visibility="{Binding VisibilityViewModel.IsTimeVisible, Converter={StaticResource bvc}}"
+                       Text="{Binding Time}" />
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Background="Yellow" Visibility="{Binding VisibilityViewModel.IsPlayPauseVisible, Converter={StaticResource bvc}}">
+            <Button Content="Start" Margin="4,0" Width="40" Height="20"/>
+            <Button Content="Pause" Margin="4,0" Width="40" Height="20"/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom" Background="Orange" Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}">
+            <Button Content="Start1" Margin="4,0" Width="40" Height="20"/>
+            <Button Content="Pause1" Margin="4,0" Width="40" Height="20"/>
         </DockPanel>
     </DockPanel>
 </Window>
