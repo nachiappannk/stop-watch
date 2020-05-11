@@ -59,11 +59,6 @@ namespace StopWatch
             });
         }
 
-        private void MButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void OnTitleChange(object sender, RoutedEventArgs e)
         {
             if (this.WindowStyle == WindowStyle.None)

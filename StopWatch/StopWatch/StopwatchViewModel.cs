@@ -15,6 +15,8 @@ namespace StopWatch
 
         MyStopwatch _stopWath = new MyStopwatch();
 
+        private bool _isRunning = false;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         List<Mode> _modes = new List<Mode>() { Mode.ExpandContractButtonOnly, Mode.Time, Mode.StartStopButton, Mode.Detailed };
@@ -65,11 +67,25 @@ namespace StopWatch
 
         public StopwatchViewModel()
         {
-            CurrentMode = Mode.Time;
-            _stopWath.Start();
+            CurrentMode = Mode.Time;;
             ExpandCommand = new Command(Expand, CanExpand);
             ContractCommand = new Command(Contract, CanContract);
+            PausePlayCommand = new Command(StartStop);
+            ClearCommand = new Command(_stopWath.Clear, () => !_isRunning);
             UpdateTimeAsync();
+        }
+
+        private void StartStop()
+        {
+            if (!_isRunning)
+            {
+                _stopWath.Start();
+                _isRunning = true;
+            }
+            else {
+                _stopWath.Stop();
+                _isRunning = false;
+            }
         }
 
         private bool CanExpand()
