@@ -27,7 +27,7 @@ namespace StopWatch
         {
             var endingTime = DateTime.Now;
             var timeSpan = endingTime - _startingTime;
-            _timeLogs.Add(new TimeLog() { StartTime = _startingTime.ToString("HH:mm") , Duration = timeSpan.TotalMinutes.ToString()});
+            _timeLogs.Add(new TimeLog() { StartTime = _startingTime.ToString("HH:mm") , Duration = timeSpan.TotalSeconds.ToString()});
             _stopWatch.Stop();
         }
 
@@ -38,6 +38,7 @@ namespace StopWatch
 
         public void Clear() 
         {
+            _timeLogs = new List<TimeLog>();
             _stopWatch.Stop();
             _stopWatch.Reset();
         }
