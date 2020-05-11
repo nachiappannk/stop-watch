@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -70,12 +71,18 @@ namespace StopWatch
 
         public StopwatchViewModel()
         {
-            CurrentMode = Mode.Time;;
+            CurrentMode = Mode.Time; ;
             ExpandCommand = new Command(Expand, CanExpand);
             ContractCommand = new Command(Contract, CanContract);
             PausePlayCommand = new Command(StartStop);
-            ClearCommand = new Command(_stopWath.Clear, () => !_isRunning);
+            ClearCommand = new Command(Clear, () => !_isRunning);
             UpdateTimeAsync();
+        }
+
+        private void Clear()
+        {   
+            _stopWath.Clear();
+            TimeLog.Clear();
         }
 
         private string _playPauseText = "Play";
@@ -86,8 +93,8 @@ namespace StopWatch
         }
 
 
-        private List<TimeLog> _timeLog = new List<TimeLog>();
-        public List<TimeLog> TimeLog
+        private ObservableCollection<TimeLog> _timeLog = new ObservableCollection<TimeLog>();
+        public ObservableCollection<TimeLog> TimeLog
         {
             get => _timeLog;
             set {
@@ -109,7 +116,12 @@ namespace StopWatch
                 _stopWath.Stop();
                 _isRunning = false;
                 PlayPauseText = "Play";
-                TimeLog = _stopWath.GetTimeLog();
+                TimeLog.Clear();
+                foreach(var x in _stopWath.GetTimeLog())
+                {
+                    TimeLog.Add(x);
+                }
+                
             }
         }
 

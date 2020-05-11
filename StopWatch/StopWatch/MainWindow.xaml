@@ -41,16 +41,15 @@
                 <TextBlock Text="Clear" FontSize="8"/>
             </Button>
         </Grid>
-        <DockPanel DockPanel.Dock="Bottom" Background="Orange" Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}">
-            <Button></Button>
-            <ListView ItemsSource="{Binding TimeLog}">
-                <ListView.View>
-                    <GridView AllowsColumnReorder="false">
-                        <GridViewColumn Header="Start Time" Width="50" DisplayMemberBinding="{Binding Path=StartTime}" />
-                        <GridViewColumn Header="Duration" Width="50" DisplayMemberBinding="{Binding Path=Duration}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <DockPanel DockPanel.Dock="Bottom" Background="Orange"
+                   Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}" Height="300">
+            <DataGrid AlternatingRowBackground = "LightBlue"  
+         AlternationCount = "2" AutoGenerateColumns = "False" ItemsSource="{Binding TimeLog}" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header = "Starting Time" Width="50" Binding = "{Binding StartTime}" />
+                    <DataGridTextColumn Header = "Duaration" Width="50" Binding = "{Binding Duration}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </DockPanel>
     </DockPanel>
 </Window>
