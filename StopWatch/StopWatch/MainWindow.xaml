@@ -28,29 +28,37 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="1" Width="40" Height="20" Command="{Binding PausePlayCommand}">
+            <Button Grid.Column="0" Margin="1" Height="20" Command="{Binding PausePlayCommand}">
                 <TextBlock Text="{Binding PlayPauseText}" FontSize="8"/>
             </Button>
-            <Button Grid.Column="1" Margin="1" HorizontalAlignment="Stretch" Height="20" Click="Button_Click">
+            <Button Grid.Column="1" Margin="1" Height="20" Click="Button_Click">
                 <TextBlock Text="Minimize" FontSize="8"/>
             </Button>
-            <Button Grid.Column="2" Margin="1" HorizontalAlignment="Stretch" Height="20" Click="OnTitleChange">
+            <Button Grid.Column="2" Margin="1" Height="20" Click="OnTitleChange">
                 <TextBlock x:Name="mText" Text="Show Title" FontSize="8"/>
             </Button>
-            <Button Grid.Column="3" Margin="1" Width="40" Height="20" Command="{Binding ClearCommand}">
+            <Button Grid.Column="3" Margin="1" Height="20" Command="{Binding ClearCommand}">
                 <TextBlock Text="Clear" FontSize="8"/>
             </Button>
         </Grid>
         <DockPanel DockPanel.Dock="Bottom" Background="Orange"
                    Visibility="{Binding VisibilityViewModel.IsDetailsVisible, Converter={StaticResource bvc}}" Height="300">
-            <DataGrid HorizontalAlignment="Stretch" AlternatingRowBackground = "LightBlue"  
+            <TabControl>
+                <TabItem Header="Logs">
+                    <DataGrid AlternatingRowBackground = "LightBlue"  
                       x:Name="dg"
          AlternationCount = "2" AutoGenerateColumns = "False" ItemsSource="{Binding TimeLog}" IsReadOnly="True" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header = "Starting Time" Width="50" Binding = "{Binding StartTime}" />
-                    <DataGridTextColumn Header = "Duaration" Width="50" Binding = "{Binding Duration}" />
-                </DataGrid.Columns>
-            </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header = "Starting" Width="70"  Binding = "{Binding StartTime}" />
+                            <DataGridTextColumn Header = "sss" Width="70" Binding = "{Binding Duration}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Manual">
+                    
+                </TabItem>
+            </TabControl>
+            
         </DockPanel>
     </DockPanel>
 </Window>

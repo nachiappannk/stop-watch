@@ -38,11 +38,6 @@ namespace StopWatch
             //this.Top = SystemParameters.PrimaryScreenHeight - this.Height - 40;
             //_maximizer = new Maximizer(this, 100);
             //UpdateTimeAsync();
-            
-
-            //SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
-            dg.Columns[0].Width = new DataGridLength((topD.ActualWidth - 10) / 2, DataGridLengthUnitType.SizeToHeader);
-            dg.Columns[1].Width = new DataGridLength((topD.ActualWidth - 10) / 2, DataGridLengthUnitType.SizeToHeader);
 
         }
 
